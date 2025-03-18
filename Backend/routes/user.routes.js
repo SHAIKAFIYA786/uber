@@ -1,0 +1,13 @@
+const express=require('express');
+const router=express.Router();
+const {body}=require('express-validator');
+const userController=require('../controller/user.controller');
+
+router.post('/register',[
+    body('email').isEmail().withMessage("inavalid email"),
+    body('fullname.firstname').isLength({min:3}).withMessage("name should be 3 letterd"),
+    body('password').isLength({min:6}).withMessage("password must be more than 6 letters")
+],
+userController.registerUser
+)
+module.exports=router;
