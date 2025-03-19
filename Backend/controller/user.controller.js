@@ -1,6 +1,7 @@
 const userModel=require('../models/user.model');
 const userService=require('../services/user.services');
 const {validationResult}=require('express-validator');
+const authMiddleware=require('../middlewares/auth.middleware');
 
 module.exports.registerUser = async (req, res) => {
     try {
@@ -53,10 +54,14 @@ module.exports.loginUser = async (req, res) => {
         }
 
         const token = user.generateAuthToken();
+        res.cookie('token',token);
         res.status(200).json({ token, user });
 
     } catch (error) {
         console.error("Error in loginUser:", error);
         res.status(500).json({ message: "Internal Server Error", error });
     }
+}
+module.exports.getProfile = async (req, res,next) => {
+    return res.status(200).json({ user: req.user });
 }
