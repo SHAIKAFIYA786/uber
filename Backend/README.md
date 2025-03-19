@@ -92,6 +92,37 @@ The following fields must be provided in the request body (JSON format):
 
 ---
 
+## **Endpoint: `/users/logout`**
+
+### **Description**
+This endpoint is used to log out a user by invalidating their authentication token. The token is added to a blocklist to prevent further use.
+
+### **Method**
+`GET`
+
+### **Status Codes**
+- **200 OK**: Logout successful.
+- **500 Internal Server Error**: Server encountered an error while processing the request.
+
+### **Headers**
+- **`Authorization`** (string, required): Bearer token for authentication.
+
+### **Example Request**
+```
+GET /users/logout HTTP/1.1
+Host: example.com
+Authorization: Bearer <your-auth-token>
+```
+
+### **Example Response**
+```json
+{
+    "message": "Logged out successfully. You can log in again."
+}
+```
+
+---
+
 # Authentication Middleware Documentation
 
 ## **Overview**
@@ -331,4 +362,88 @@ Authorization: Bearer <your-auth-token>
         "email": "john.doe@example.com"
     }
 }
+```
+
+---
+
+## **Blocklist Functionality**
+
+### **Overview**
+The blocklist functionality ensures that logged-out tokens cannot be reused for authentication. Tokens added to the blocklist will automatically expire after 24 hours.
+
+### **Schema**
+The blocklist schema is defined as follows:
+```js
+const blocklistSchema = new mongoose.Schema({
+    token: { type: String, unique: true, required: true },
+    createdAt: { type: Date, default: Date.now, expires: 86400 } // 86400 seconds = 24 hours
+});
+```
+## 🔥 **What is Token Blacklisting, and Why Do We Need It?**
+Token blacklisting is a **security measure** used to **invalidate JWT tokens** before they expire. This ensures users who log out or get their tokens revoked **can’t reuse old tokens to access protected routes**.
+
+### **🚑 Problem Without Blacklisting**
+- JWT tokens **exist until they expire** (e.g., 1 hour).
+- If a user **logs out**, but the token is still valid, they can **continue making requests** using the same token.
+- If an **attacker steals a JWT token**, they can **reuse it until it expires**.
+
+---
+
+### **✅ Why is Token Blacklisting Useful?**
+1. **Ensures Logged-Out Users Can’t Access Protected Routes**
+   - If a user logs out, the token is **blacklisted**, so they need to log in again to get a new token.
+
+2. **Prevents Stolen Tokens from Being Used**
+   - If someone **steals a JWT**, we can **revoke it immediately** by adding it to the blacklist.
+
+3. **Improves Security in Role-Based Access Control**
+   - If an admin **revokes access** for a user, their old tokens won’t work anymore.
+
+---
+
+## **🔄 How Blacklisting Works**
+1. **When a user logs out,** their token is stored in a blacklist.
+2. **When a user makes a request,** the system:
+   - Checks if the token is in the **blacklist**.
+   - If the token **is blacklisted**, the request is **denied**.
+   - If the token **is not blacklisted**, the request is **allowed**.
+
+---
+
+## **🛠️ Where to Store Blacklisted Tokens?**
+1. **MongoDB (Database-based approach)**
+   - Best for apps where users don’t log out frequently.
+   - Stored in a collection (`blacklist` table) and removed automatically after expiry.
+
+2. **Redis (In-memory storage)**
+   - Best for **fast access** and **large-scale apps**.
+   - Blacklisted tokens expire automatically after a set time.
+
+3. **Memory (In-app storage)**
+   - Works for small apps but **not recommended for production** (resets when the server restarts).
+
+---
+
+## **🚀 What Happens Without Blacklisting?**
+- If a user logs out, their token still **works until expiry**.
+- If an attacker gets access to a token, they can **continue using it**.
+- Users with revoked access can **still use old tokens**.
+
+---
+
+## **🛡️ When Should You Use Token Blacklisting?**
+✔️ In **apps with authentication** where users **log in and out**.  
+✔️ If your app **handles sensitive user data**.  
+✔️ If you need **session-based security**, but are using JWT instead of sessions.  
+
+---
+
+## **🔥 Final Thoughts**
+- **JWT alone** doesn’t provide a way to **force logout** before token expiry.
+- **Blacklisting ensures that tokens can’t be used after logout**.
+- **It’s critical for security in authentication-based apps.**
+
+👉 **Use token blacklisting if you want a more secure authentication system!** 🚀
+
+
 ```

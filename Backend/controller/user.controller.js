@@ -2,6 +2,7 @@ const userModel=require('../models/user.model');
 const userService=require('../services/user.services');
 const {validationResult}=require('express-validator');
 const authMiddleware=require('../middlewares/auth.middleware');
+const blocklistSchema=require('../models/user.blocklist.model');
 
 module.exports.registerUser = async (req, res) => {
     try {
@@ -65,3 +66,27 @@ module.exports.loginUser = async (req, res) => {
 module.exports.getProfile = async (req, res,next) => {
     return res.status(200).json({ user: req.user });
 }
+// module.exports.logout = async (req, res) => {
+//     res.clearCookie('token');
+//     await blocklistSchema.create({ token: req.cookies.token || req.headers.authorization.split(' ')[1] });
+//     res.status(200).json({ message: "Logged out successfully" });
+// }
+module.exports.logout = async (req, res) => {
+    try {
+        let token = req.cookies.token || (req.headers.authorization ? req.headers.authorization.split(' ')[1] : null);
+
+        if (token) {
+            // ✅ Block the token only if it exists
+            await blocklistSchema.create({ token });
+        }
+
+        // ✅ Clear token from cookies
+        res.clearCookie("token");
+
+        res.status(200).json({ message: "Logged out successfully. You can log in again." });
+
+    } catch (error) {
+        console.error("Logout error:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};
