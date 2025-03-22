@@ -447,3 +447,73 @@ Token blacklisting is a **security measure** used to **invalidate JWT tokens** b
 
 
 ```
+
+Captain Registration API Documentation
+Endpoint
+POST /captains/register
+
+Description
+This endpoint allows captains to register by providing their details, including personal information and vehicle details. It follows the same structure as the User Registration API, with additional fields for vehicle information.
+
+Request Body
+Send a JSON object with the following structure:
+
+json
+Copy
+Edit
+{
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "johndoe@example.com",
+  "password": "securepassword",
+  "vehicle": {
+    "color": "Blue",
+    "plate": "ABC-1234",
+    "capacity": 4,
+    "typevehicle": "Sedan"
+  }
+}
+Field Requirements:
+Field	Type	Required	Description
+fullname.firstname	String	✅	First name (min 3 characters)
+fullname.lastname	String	✅	Last name
+email	String	✅	Must be a valid email format
+password	String	✅	Minimum 6 characters
+vehicle.color	String	✅	Color of the vehicle
+vehicle.plate	String	✅	Vehicle's plate number
+vehicle.capacity	Number	✅	Capacity of the vehicle
+vehicle.typevehicle	String	✅	Type of vehicle (e.g., Sedan, SUV)
+Response Codes
+Status Code	Description
+201 Created	Captain registered successfully
+400 Bad Request	Validation failed (missing/invalid fields)
+500 Internal Server Error	Unexpected server error
+Example Success Response
+json
+Copy
+Edit
+{
+  "message": "Captain registered successfully",
+  "captain": {
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "johndoe@example.com",
+    "vehicle": {
+      "color": "Blue",
+      "plate": "ABC-1234",
+      "capacity": 4,
+      "typevehicle": "Sedan"
+    }
+  }
+}
+Notes
+Passwords are automatically hashed before being stored.
+
+A JWT token may be generated upon successful registration if authentication is required immediately.
+
+This API structure is identical to User Registration with additional vehicle-related fields.
+

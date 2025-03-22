@@ -6,7 +6,7 @@ module.exports.authMiddleware = async (req, res, next) => {
     console.log("Headers Received:", req.headers); // Debugging: Log all headers
 
     let token = req.cookies.token; // First, check if the token is in cookies
-    console.log("Token from Cookies:", token);
+    console.log("Token  from Cookies:", token);
     const auth = req.headers.authorization;
     console.log("headers auth:", auth); // Debugging: Check if token is extracted correctly
 
@@ -21,7 +21,7 @@ module.exports.authMiddleware = async (req, res, next) => {
 
     if (!token) {
         return res.status(401).json({ message: "Unauthorized: No token provided" });
-    }
+    }    
   
 
     console.log("Extracted Token:", token); // Debugging: Check if token is extracted correctly
