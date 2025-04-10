@@ -1,0 +1,15 @@
+clone the website 
+then open the cloned folder and then in that create a new folder called frontend 
+then enter the npm create vite@latest
+then  create frontend folder
+then choose the languages 
+then npm i 
+then npm run dev 
+go to tailwind.css
+then go to frameworks theb seject vite
+then install tailwind .css in your project
+
+
+then go to app.jsx
+then install the routing package npm i react-router-dom
+then in the main.js import { BrowserRouter } from 'react-router-dom'(it will perform routing)
