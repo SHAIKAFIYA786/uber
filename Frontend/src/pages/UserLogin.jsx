@@ -1,21 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import axios from 'axios';
+import {useNavigate} from "react-router-dom";
 
 const UserLogin = () => {
    const [email,setEmail]=useState("")
    const [password,setPassword]=useState("")
-   const [userData,setUserData]=useState({});
-   const submitHandler=(e)=>{
+   const [userData,setUserData]=useState({}); 
+   const navigate = useNavigate();//before using navigate use this
+   const submitHandler=async (e)=>{
     //dont referesh the form 
     e.preventDefault();
-    setUserData({
+    const data={
       email:email,
       password:password
-    });
-    console.log(userData)
-    // by the above thing we can be able to send the data to the other pages as well
-    console.log("hello");
+    }
+    setUserData(data)
+    const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`,data);
+    if(response.status==200){
+      const data=response.data;
+      console.log("Navigating to /", data);
+      // here we can set the user data to the context
+      setUserData(data);
+      localStorage.setItem("token", JSON.stringify(data));
+      // and then we can navigate to the home page
+      navigate("/home2");
+    }
     setEmail("");
     setPassword("");
    }
