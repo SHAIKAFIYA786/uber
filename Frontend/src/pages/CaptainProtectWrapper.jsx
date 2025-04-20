@@ -47,8 +47,7 @@ const  CaptainProtectWrapper = ({ children }) => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-  const { captain, setCaptainData } = useContext(CaptainContext); // ✅ access context
-
+  // const { captain, setCaptainData } = useContext(CaptainContext); // ✅ access context
   useEffect(() => {
     if (!token) {
       navigate('/login');

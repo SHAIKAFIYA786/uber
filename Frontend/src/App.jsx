@@ -6,12 +6,15 @@ import UserSignup from './pages/UserSignup'
 import CaptainLogin from './pages/CaptainLogin'
 import CaptainSignup from './pages/CaptainSignUp'
 import CaptainHome from './pages/CaptainHome'
+import Riding from './pages/riding'
 import Home2 from './pages/Home2'
 import { useContext } from 'react';
 import { UserContextData } from './context/userContext';
 import UserProtectWrapper from './pages/userProtectWrapper';
-import CaptainProtectWrapper from './pages/CaptainProtectWrapper'
+import  CaptainProtectWrapper from './pages/CaptainProtectWrapper'
 import UserLogout from './pages/UserLogout';
+// import CaptainRiding from './pages/CaptainRiding';
+import CaptainRiding from './pages/CaptainRiding';
 // import CaptainContext from './context/CaptainContext';
 import New from './pages/New'
 
@@ -34,6 +37,8 @@ const App = () => {
           <CaptainHome/>
         </CaptainProtectWrapper>}/>
         <Route path="/new" element={<New/>}/>
+        <Route path="/riding" element={<Riding/>}/>
+        <Route path="/captainriding" element={<CaptainRiding/>}/>
       </Routes>
     </div>
   )
