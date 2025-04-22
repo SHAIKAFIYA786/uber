@@ -517,3 +517,125 @@ A JWT token may be generated upon successful registration if authentication is r
 
 This API structure is identical to User Registration with additional vehicle-related fields.
 
+## 🗺️ Maps API Documentation
+
+This file documents two core GET endpoints for fetching **coordinates** and **distance/time** using optional Google Maps API support.
+
+## 🗺️ Maps API Route Documentation
+
+---
+
+### 📍 `GET /get-coordinates`
+
+**Description:** Fetches the latitude and longitude of a given address.
+
+#### 🔐 Auth Required:
+Yes — Bearer Token in `Authorization` header.
+
+#### 📝 Query Parameters:
+| Parameter | Type   | Required | Description             |
+|-----------|--------|----------|-------------------------|
+| address   | string | Yes      | Location to be geocoded |
+
+#### ✅ Success Response:
+```json
+{
+  "lat": 12.9716,
+  "lng": 77.5946,
+  "default": true,
+  "message": "API key was empty. Returned default coordinates for testing."
+}
+```
+
+#### ❌ Error Response:
+```json
+{
+  "errors": [
+    {
+      "type": "field",
+      "msg": "Invalid value",
+      "path": "address",
+      "location": "query"
+    }
+  ]
+}
+```
+
+---
+
+### 🚗 `GET /get-distance-time`
+
+**Description:** Fetches distance and travel time between two locations.
+
+#### 🔐 Auth Required:
+Yes — Bearer Token in `Authorization` header.
+
+#### 📝 Query Parameters:
+| Parameter    | Type   | Required | Description                  |
+|--------------|--------|----------|------------------------------|
+| origin       | string | Yes      | Starting point               |
+| destination  | string | Yes      | Ending point                 |
+
+#### ✅ Success Response:
+```json
+{
+  "distance": "10.2 km",
+  "duration": "25 mins"
+}
+```
+
+#### ❌ Error Response:
+```json
+{
+  "message": "Unable to fetch distance and time"
+}
+```
+
+---
+
+> ℹ️ **Note:** Replace `localhost:4000` with your actual backend URL when making requests from the client or Postman.
+
+---
+
+
+
+## 🧭 GET `/get-coordinates`
+
+### 📌 Description:
+This endpoint fetches the **latitude and longitude (geographic coordinates)** for a given place string using the **Google Geocoding API**.
+
+---
+
+### 🔐 Authentication:
+Protected route – requires valid token via `authMiddleware`.
+
+---
+
+### 📥 Query Parameters:
+
+| Name   | Type   | Required | Description                                   |
+|--------|--------|----------|-----------------------------------------------|
+| place  | string | Yes      | The name or address of the place to locate.   |
+
+---
+
+### ✅ Validation:
+- `place` must be a non-empty string.
+- Validated using `express-validator`.
+
+---
+
+### 🧠 Logic:
+- The controller calls `mapsService.getCoordinates(place)`.
+- That service hits the Google Geocoding API.
+- Returns coordinates if found.
+
+---
+
+### 📤 Response (Success - 200):
+
+```json
+{
+  "lat": 48.8566,
+  "lng": 2.3522
+}

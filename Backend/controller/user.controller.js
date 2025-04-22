@@ -5,7 +5,9 @@ const authMiddleware=require('../middlewares/auth.middleware');
 const blocklistSchema=require('../models/user.blocklist.model');
 
 module.exports.registerUser = async (req, res) => {
+    console.log("iam in control")
     try {
+        console.log("try"); // <-- ADD THIS
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });

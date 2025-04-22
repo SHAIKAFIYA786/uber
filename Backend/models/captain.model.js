@@ -106,8 +106,14 @@ captainSchema.methods.comparePassword = async function (enteredPassword) {
 
 // ✅ Generate JWT Token
 captainSchema.methods.generateAuthToken = function () {
-    return jwt.sign({ _id: this._id, email: this.email }, process.env.JWT_SECRET, { expiresIn: "7d" });
+    // return jwt.sign({ _id: this._id, email: this.email }, process.env.JWT_SECRET, { expiresIn: "7d" });
+    const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+    return token;
 };
+// UserSchema.methods.generateAuthToken = function () {
+//     const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+//     return token;
+// }
 
 const Captain = mongoose.model('Captain', captainSchema);
 module.exports = Captain;
