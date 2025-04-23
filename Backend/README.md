@@ -639,3 +639,289 @@ Protected route – requires valid token via `authMiddleware`.
   "lat": 48.8566,
   "lng": 2.3522
 }
+
+
+http://localhost:4000/maps/get-suggestions?input=Chennai
+[
+    {
+        "type": "Feature",
+        "properties": {
+            "datasource": {
+                "sourcename": "openstreetmap",
+                "attribution": "© OpenStreetMap contributors",
+                "license": "Open Database License",
+                "url": "https://www.openstreetmap.org/copyright"
+            },
+            "old_name": "Madras",
+            "country": "India",
+            "country_code": "in",
+            "state": "Tamil Nadu",
+            "county": "Chennai",
+            "city": "Chennai",
+            "postcode": "600001",
+            "iso3166_2": "IN-TN",
+            "lon": 80.270186,
+            "lat": 13.0836939,
+            "state_code": "TN",
+            "result_type": "postcode",
+            "formatted": "Chennai, TN, India",
+            "address_line1": "Chennai",
+            "address_line2": "TN, India",
+            "category": "populated_place",
+            "timezone": {
+                "name": "Asia/Kolkata",
+                "offset_STD": "+05:30",
+                "offset_STD_seconds": 19800,
+                "offset_DST": "+05:30",
+                "offset_DST_seconds": 19800,
+                "abbreviation_STD": "IST",
+                "abbreviation_DST": "IST"
+            },
+            "plus_code": "7M5237MC+F3",
+            "plus_code_short": "MC+F3 Chennai, India",
+            "rank": {
+                "importance": 0.6280422595919259,
+                "confidence": 1,
+                "confidence_city_level": 1,
+                "match_type": "full_match"
+            },
+            "place_id": "51927538ba4a11544059d8bf46edd92a2a40f00103f901e4acb9c000000000c002079203093630303030312b696e"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                80.270186,
+                13.0836939
+            ]
+        },
+        "bbox": [
+            80.110186,
+            12.9236939,
+            80.430186,
+            13.2436939
+        ]
+    },
+    {
+        "type": "Feature",
+        "properties": {
+            "datasource": {
+                "sourcename": "openstreetmap",
+                "attribution": "© OpenStreetMap contributors",
+                "license": "Open Database License",
+                "url": "https://www.openstreetmap.org/copyright"
+            },
+            "country": "India",
+            "country_code": "in",
+            "state": "Tamil Nadu",
+            "county": "Chennai",
+            "iso3166_2": "IN-TN",
+            "lon": 80.20230352827184,
+            "lat": 13.000841300000001,
+            "state_code": "TN",
+            "result_type": "county",
+            "formatted": "Chennai, India",
+            "address_line1": "Chennai",
+            "address_line2": "India",
+            "category": "administrative",
+            "timezone": {
+                "name": "Asia/Kolkata",
+                "offset_STD": "+05:30",
+                "offset_STD_seconds": 19800,
+                "offset_DST": "+05:30",
+                "offset_DST_seconds": 19800,
+                "abbreviation_STD": "IST",
+                "abbreviation_DST": "IST"
+            },
+            "plus_code": "7M522622+8W",
+            "rank": {
+                "importance": 0.4768878569361357,
+                "confidence": 1,
+                "match_type": "full_match"
+            },
+            "place_id": "51c0727f8af20c544059e6f857456e002a40f00101f901a1b5780000000000c00209"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                80.20230352827184,
+                13.000841300000001
+            ]
+        },
+        "bbox": [
+            80.1182821,
+            12.8514482,
+            80.3069299,
+            13.1502817
+        ]
+    },
+    {
+        "type": "Feature",
+        "properties": {
+            "datasource": {
+                "sourcename": "openstreetmap",
+                "attribution": "© OpenStreetMap contributors",
+                "license": "Open Database License",
+                "url": "https://www.openstreetmap.org/copyright"
+            },
+            "country": "India",
+            "country_code": "in",
+            "state": "Telangana",
+            "county": "Shankarampet_R mandal",
+            "state_district": "Medak",
+            "city": "Chennaipally",
+            "postcode": "502248",
+            "iso3166_2": "IN-TS",
+            "lon": 78.3926264,
+            "lat": 18.0311127,
+            "state_code": "TG",
+            "result_type": "postcode",
+            "formatted": "Chennaipally, TG, India",
+            "address_line1": "Chennaipally",
+            "address_line2": "TG, India",
+            "category": "populated_place",
+            "timezone": {
+                "name": "Asia/Kolkata",
+                "offset_STD": "+05:30",
+                "offset_STD_seconds": 19800,
+                "offset_DST": "+05:30",
+                "offset_DST_seconds": 19800,
+                "abbreviation_STD": "IST",
+                "abbreviation_DST": "IST"
+            },
+            "plus_code": "7JCW29JV+C3",
+            "rank": {
+                "importance": 0.14667666666666662,
+                "confidence": 1,
+                "confidence_city_level": 1,
+                "match_type": "full_match"
+            },
+            "place_id": "51f5e27aca209953405982fd7c00f7073240f00103f901e0615b6f01000000c002079203093530323234382b696e"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                78.3926264,
+                18.0311127
+            ]
+        },
+        "bbox": [
+            78.3726264,
+            18.0111127,
+            78.4126264,
+            18.0511127
+        ]
+    },
+    {
+        "type": "Feature",
+        "properties": {
+            "datasource": {
+                "sourcename": "openstreetmap",
+                "attribution": "© OpenStreetMap contributors",
+                "license": "Open Database License",
+                "url": "https://www.openstreetmap.org/copyright"
+            },
+            "country": "India",
+            "country_code": "in",
+            "state": "Telangana",
+            "county": "Tripuraram mandal",
+            "state_district": "Nalgonda",
+            "city": "Chennaipalem",
+            "iso3166_2": "IN-TS",
+            "lon": 79.4987159,
+            "lat": 16.7876351,
+            "state_code": "TG",
+            "result_type": "city",
+            "formatted": "Chennaipalem, TG, India",
+            "address_line1": "Chennaipalem",
+            "address_line2": "TG, India",
+            "category": "populated_place",
+            "timezone": {
+                "name": "Asia/Kolkata",
+                "offset_STD": "+05:30",
+                "offset_STD_seconds": 19800,
+                "offset_DST": "+05:30",
+                "offset_DST_seconds": 19800,
+                "abbreviation_STD": "IST",
+                "abbreviation_DST": "IST"
+            },
+            "plus_code": "7J8XQFQX+3F",
+            "rank": {
+                "importance": 0.14667666666666662,
+                "confidence": 1,
+                "confidence_city_level": 1,
+                "match_type": "full_match"
+            },
+            "place_id": "51b11f18f6eadf53405983ae3374a2c93040f00103f90160a4048801000000c00208"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                79.4987159,
+                16.7876351
+            ]
+        },
+        "bbox": [
+            79.4787159,
+            16.7676351,
+            79.5187159,
+            16.8076351
+        ]
+    },
+    {
+        "type": "Feature",
+        "properties": {
+            "datasource": {
+                "sourcename": "openstreetmap",
+                "attribution": "© OpenStreetMap contributors",
+                "license": "Open Database License",
+                "url": "https://www.openstreetmap.org/copyright"
+            },
+            "country": "India",
+            "country_code": "in",
+            "state": "Andhra Pradesh",
+            "county": "Bandi Atmakur",
+            "state_district": "Nandyal",
+            "city": "Gali Chennaiah Palem",
+            "iso3166_2": "IN-AP",
+            "lon": 78.5840007,
+            "lat": 15.6155348,
+            "state_code": "AP",
+            "result_type": "city",
+            "formatted": "Gali Chennaiah Palem, AP, India",
+            "address_line1": "Gali Chennaiah Palem",
+            "address_line2": "AP, India",
+            "category": "populated_place",
+            "timezone": {
+                "name": "Asia/Kolkata",
+                "offset_STD": "+05:30",
+                "offset_STD_seconds": 19800,
+                "offset_DST": "+05:30",
+                "offset_DST_seconds": 19800,
+                "abbreviation_STD": "IST",
+                "abbreviation_DST": "IST"
+            },
+            "plus_code": "7J7WJH8M+6J",
+            "rank": {
+                "importance": 0.14667666666666662,
+                "confidence": 1,
+                "confidence_city_level": 1,
+                "match_type": "full_match"
+            },
+            "place_id": "51d5d5784460a55340598d199760273b2f40f00103f901e9d89bbc01000000c00208"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                78.5840007,
+                15.6155348
+            ]
+        },
+        "bbox": [
+            78.5640007,
+            15.5955348,
+            78.6040007,
+            15.6355348
+        ]
+    }
+]
+http://localhost:4000/maps/ /get-suggestions?origin=Chennai&destination=Delhi

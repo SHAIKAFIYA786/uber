@@ -8,8 +8,7 @@ const rideSchema=new mongoose.Schema({
     },
     captain:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'captainSchema',
-        required:true
+        ref:'captainSchema'
     },
     pickup:{
         type:String,
@@ -22,6 +21,11 @@ const rideSchema=new mongoose.Schema({
     fare:{
         type:Number,
         required:true
+    },
+    vehicleType: { // Add this line to store vehicleType
+        type: String,
+        enum: ['auto', 'car', 'motorCycle'], // Ensure this matches your allowed values
+        required: true
     },
     status:{
         type:String,
