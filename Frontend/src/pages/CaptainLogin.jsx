@@ -78,12 +78,12 @@ const CaptainLogin = () => {
             className="px-4 py-2 bg-[#eeeeee] w-full text-lg placeholder:text-base my-2"
           />
           <br />
-          <button
+          <Link to='/captain-home'
             type="submit"
-            className="bg-[black] text-white py-2 px-4 rounded w-full mt-4 my-2"
+            className="bg-[black] text-white py-2 px-4 rounded w-full mt-4 my-2 flex items-center justify-center"
           >
             Login
-          </button>
+          </Link>
           <p className="text-align-center">
             Don't have an account?{" "}
             <Link className="text-blue-600" to="/captainsignup">
