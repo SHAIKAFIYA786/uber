@@ -1,0 +1,12 @@
+without exporting you cant use this file in another file that was the error
+git pull origin sarthak
+git reset --hard "HEAD@{1}"
+Situation	What Happens?	MERGE_MSG Created?
+Only remote (GitHub) has new code, you have  none	     ✅ Fast-forward pull	❌ No merge, no MERGE_MSG
+Only you have new code, nothing on GitHub	             ✅ Push works (if allowed)	❌ No pull, no MERGE_MSG
+You and GitHub both have new code	 ⚠️ Git must merge	 ✅ Yes, MERGE_MSG is created
+You have uncommitted changes	⚠️ Git might stop you from pulling	❌ or temporary merge warning   
+git fetch origin
+git checkout -b sarthak origin/sarthak
+git merge sarthak
+git push origin main

@@ -10,7 +10,7 @@ const  DriverSearchPanel = (props) => {
                 <i className="ri-arrow-down-line text-black p-2"></i>
             </h2>
             <h1 className='font-bold text-2xl'>Looking For Diver</h1>
-            <img className='h-40 w-full' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ7Kt54z31PkbdlqmqnyWnaCjvcLYRG-T_8Q&s" />
+            <img className='h-40 w-full' src={props.selectedRideData?.vehicleimg}  />
             <div className='flex flex-col p-4 bg-white shadow-lg w-full border-2 border-transparent-500 rounded-lg active:border-2 hover:border-black-500'>
                 <div className='flex items-center mb-4 border-b-4 border-[#eeeeee] pt-8 pb-8'>
                     <h2 className='text-2xl'>
@@ -18,7 +18,7 @@ const  DriverSearchPanel = (props) => {
                     </h2>
                     <div>
                         <p className='font-bold text-2xl ml-4'>562/11-A</p>
-                        <p className='ml-4 text-lg'>Kalikiri,Chittor,Andhra Pradesh</p>
+                        <p className='ml-4 text-lg'>{props.pickup}</p>
                     </div>
                 </div>
                 <div className='flex items-center mb-4 border-b-4 border-[#eeeeee] pt-8 pb-8'>
@@ -27,7 +27,7 @@ const  DriverSearchPanel = (props) => {
                     </h2>
                     <div>
                         <p className='font-bold text-2xl ml-4'>Third Wave Coffe</p>
-                        <p className='ml-4 text-lg'>murkambattu,chittorAndhra Pradesh</p>
+                        <p className='ml-4 text-lg'>{props.destination}</p>
                     </div>
                 </div>
                 <div className='flex items-centerbmb-2 border-b-4 border-[#eeeeee] pt-8 pb-8'>
@@ -35,7 +35,7 @@ const  DriverSearchPanel = (props) => {
                         <i className="ri-map-pin-fill text-2xl"></i>
                     </h2>
                     <div>
-                        <p className='font-bold text-2xl ml-4'>$132.32</p>
+                        <p className='font-bold text-2xl ml-4'>₹{props.selectedRideData?.fare}</p>
                         <p className='ml-4 text-lg'>Cash Cash</p>
                     </div>
                 </div>

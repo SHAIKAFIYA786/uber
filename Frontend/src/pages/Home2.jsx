@@ -10,6 +10,12 @@ import VehiclePanel from '../components/VehiclePanel';
 import ConfirmedRide from '../components/ConfirmedRide';
 import DriverSearchPanel from '../components/DriverSearchPanel';
 import WaitingForDriver from '../components/WaitingForDriver';
+import { useEffect } from 'react';
+import axios from 'axios';
+// import { UserContextData } from '../context/UserContext';
+import { UserContextData } from '../context/UserContext';
+import { SocketContext } from '../context/SocketContext';
+
 
 
 const New = () => {
@@ -26,6 +32,153 @@ const New = () => {
   const [vehiclePanel, setVehiclePanel] = useState(false)
   const [rideConfirmPanel, setrideConfirmPanel] = useState(false)
   const [waitingForDriver, setwaitingForDriver] = useState(false)
+  const [locationSuggestions, setLocationSuggestions] = useState([]);
+  const authToken = localStorage.getItem('token');
+  const [isPickup, setisPickup] = useState(true);
+  const [isDestination, setisDestination] = useState(true);
+  const [selectedRideData, setselectedRideData] = useState(null)
+  const [Fare, setFare] = useState(null)
+  console.log(pickup, destination);
+
+  const { sendMessage, receiveMessage } = useContext(SocketContext);
+  const { user } = useContext(UserContextData);
+
+  // useEffect(() => {
+  //   console.log("heybeta");
+  //   console.log(user);
+  //   socket.emit("join", { userType: "user", userId: user._id })
+  // }, [user])
+
+  // socket.on('ride-confirmed', ride => {
+
+  //   setVehicleFound(false)
+  //   setWaitingForDriver(true)
+  //   setRide(ride)
+  // })
+
+  // socket.on('ride-started', ride => {
+  //   console.log("ride")
+  //   setWaitingForDriver(false)
+  //   navigate('/riding', { state: { ride } }) // Updated navigate to include ride data
+  // })
+
+
+  // const handlePickupChange = async (e) => {
+  //   setPickup(e.target.value)
+  //   try {
+  //     const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, {
+  //       params: { input: e.target.value },
+  //       headers: {
+  //         Authorization: `Bearer ${localStorage.getItem('token')}`
+  //       }
+
+  //     })
+  //     setPickupSuggestions(response.data)
+  //   } catch {
+  //     // handle error
+  //   }
+  // }
+
+  // const handleDestinationChange = async (e) => {
+  //   setDestination(e.target.value)
+  //   try {
+  //     const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, {
+  //       params: { input: e.target.value },
+  //       headers: {
+  //         Authorization: `Bearer ${localStorage.getItem('token')}`
+  //       }
+  //     })
+  //     setDestinationSuggestions(response.data)
+  //   } catch {
+  //     // handle error
+  //   }
+  // }
+
+
+  useEffect(() => {
+    if (pickup) {
+      const storedToken = localStorage.getItem('token'); // Retrieve the token from localStorage
+
+      if (!storedToken) {
+        console.error("No auth token found. Please log in.");
+        return;
+      }
+
+      try {
+        const parsedToken = JSON.parse(storedToken); // Parse the token if it's stored as a JSON string
+        const authToken = parsedToken.token; // Extract the actual token
+
+        axios
+          .get(`http://localhost:4000/maps/get-suggestions?input=${pickup}`, {
+            headers: {
+              'Authorization': `Bearer ${authToken}`, // Pass the token from localStorage
+              'Content-Type': 'application/json', // Set content type to JSON
+            },
+          })
+          .then((response) => {
+            console.log(response.data); // Log the data received from the API
+            setLocationSuggestions(response.data); // Set the location suggestions to state
+          })
+          .catch((error) => {
+            if (error.response) {
+              // Server responded with a status code outside the 2xx range
+              console.error("Error fetching suggestions:", error.response.data);
+            } else if (error.request) {
+              // Request was made but no response received
+              console.error("No response received:", error.request);
+            } else {
+              // Something else caused the error
+              console.error("Error setting up request:", error.message);
+            }
+          });
+      } catch (error) {
+        console.error("Error parsing token:", error.message);
+      }
+    }
+  }, [pickup]);
+  useEffect(() => {
+    if (destination) {
+      const storedToken = localStorage.getItem('token'); // Retrieve the token from localStorage
+
+      if (!storedToken) {
+        console.error("No auth token found. Please log in.");
+        return;
+      }
+
+      try {
+        const parsedToken = JSON.parse(storedToken); // Parse the token if it's stored as a JSON string
+        const authToken = parsedToken.token; // Extract the actual token
+
+        axios
+          .get(`http://localhost:4000/maps/get-suggestions?input=${destination}`, {
+            headers: {
+              'Authorization': `Bearer ${authToken}`, // Pass the token from localStorage
+              'Content-Type': 'application/json', // Set content type to JSON
+            },
+          })
+          .then((response) => {
+            console.log(response.data); // Log the data received from the API
+            setLocationSuggestions(response.data); // Set the location suggestions to state
+          })
+          .catch((error) => {
+            if (error.response) {
+              // Server responded with a status code outside the 2xx range
+              console.error("Error fetching suggestions:", error.response.data);
+            } else if (error.request) {
+              // Request was made but no response received
+              console.error("No response received:", error.request);
+            } else {
+              // Something else caused the error
+              console.error("Error setting up request:", error.message);
+            }
+          });
+      } catch (error) {
+        console.error("Error parsing token:", error.message);
+      }
+    }
+  }, [destination]);
+
+
 
   const vehicleData = [
     {
@@ -64,18 +217,6 @@ const New = () => {
       });
     }
   }, [openPanel]);
-  // useGSAP(function () {
-  //      if(vehiclePanel){
-  //         gsap.to(vehiclePanelRef.current, {
-  //             transform:'translateY(0)'
-  //         })
-  //      }
-  //      else{
-  //         gsap.to(vehiclePanelRef.current, {
-  //             transform:'translateY(100)'
-  //         })
-  //      }
-  // },[vehiclePanel])
   useGSAP(() => {
     if (vehiclePanel) {
       gsap.to(vehiclePanelRef.current, {
@@ -137,6 +278,74 @@ const New = () => {
     }
   }, [waitingForDriver]);
 
+  async function findTrip() {
+    const storedToken = localStorage.getItem('token'); // Retrieve the token from localStorage
+
+    if (!storedToken) {
+      console.error("No auth token found. Please log in.");
+      return;
+    } 
+    try {
+      const parsedToken = JSON.parse(storedToken); // Parse the token if it's stored as a JSON string
+      const authToken = parsedToken.token; // Extract the actual token
+
+      const response = await fetch(`http://localhost:4000/rides/get-Fare?pickup=${pickup}&destination=${destination}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${authToken}`, // Pass the token in the Authorization header
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error fetching fare:", errorData);
+        return;
+      }
+
+      const fareData = await response.json();
+      console.log("Fare Data:", fareData); // Log the fare data to the console
+      setFare(fareData); // Optionally, store the fare in state if needed
+      console.log(response);
+    } catch (error) {
+      console.error("Error fetching fare:", error.message);
+    }
+
+  }
+  
+  async function createRide() {
+    const storedToken = localStorage.getItem('token'); // Retrieve the token from localStorage
+
+    if (!storedToken) {
+      console.error("No auth token found. Please log in.");
+      return;
+    }
+    try {
+      const parsedToken = JSON.parse(storedToken); // Parse the token if it's stored as a JSON string
+      const authToken = parsedToken.token; // Extract the actual token
+      const response = await fetch(`http://localhost:4000/rides/createRide`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          pickup,
+          destination,
+          vehicleType: selectedRideData.type
+        }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error fetching fare:", errorData);
+        return;
+      }
+      const rideData = await response.json();
+      console.log("ride Data:", rideData); // Log the fare data to the console
+      console.log(response);
+    } catch (error) {
+      console.error("Error fetching fare:", error.message);
+    }
+  }
   return (
     <div className=" h-screen relative overflow-hidden">
       <img
@@ -171,11 +380,13 @@ const New = () => {
               value={pickup}
               onClick={() => {
                 setPanel(true)
+                setisPickup(true);
               }}
               className="px-4 py-4 bg-[#eeeeee] w-full text-lg placeholder:text-sm my-2" />
             <input type="text"
               onClick={() => {
                 setPanel(true)
+                setisPickup(false);
               }}
               onChange={(e) => {
                 setDestination(e.target.value)
@@ -184,19 +395,45 @@ const New = () => {
               placeholder="Enter your destiantion " className="px-4 py-4 bg-[#eeeeee] w-full text-lg placeholder:text-sm my-2"
               value={destination} />
           </form>
+          <button
+            onClick={() => {
+              findTrip();
+              setVehiclePanel(true);
+              setPanel(false);
+            }}
+            className='w-full py-4 px-4 flex justify-center bg-black text-white rounded-lg mb-2 text-xl font-bold'>
+            Find trip
+          </button>
         </div>
+        {/* <div ref={panelRef} className=' h-[0%] w-full bg-white'>
+          <LocationSearchPanel setPanel={setPanel} setVehicalPanel={setVehiclePanel} searchText={pickup}  suggestions={locationSuggestions}/>
+        </div> */}
         <div ref={panelRef} className=' h-[0%] w-full bg-white'>
-          <LocationSearchPanel setPanel={setPanel} setVehicalPanel={setVehiclePanel} />
+          <LocationSearchPanel
+            setPanel={setPanel}
+            setVehicalPanel={setVehiclePanel}
+            searchText={pickup}
+            locations={locationSuggestions} // Pass as locations
+            setPickup={setPickup}
+            setDestination={setDestination}
+            isPickup={isPickup}
+            setisPickup={setisPickup}
+            setisDestination={setisDestination}
+          />
         </div>
       </div>
       <div ref={vehiclePanelRef} className='translate-y-full fixed z-10 bg-green bottom-0 w-full round'>
-        <VehiclePanel setRideConfirmPanel={setrideConfirmPanel} setVehiclePanel={setVehiclePanel} vehicleData={vehicleData} setPanel={setPanel} />
+        <VehiclePanel setRideConfirmPanel={setrideConfirmPanel} setVehiclePanel={setVehiclePanel} vehicleData={vehicleData} setPanel={setPanel} locations={locationSuggestions} setPickup={setPickup} setDestination={setDestination} setFare={setFare} Fare={Fare} setselectedRideData={setselectedRideData} />
       </div>
       <div ref={rideconfirmPanelRef} className='translate-y-full fixed z-10 bg-green bottom-0 w-full round'>
         <ConfirmedRide setdriverSearchPanel={setdriverSearchPanel}
           setRideConfirmPanel={setrideConfirmPanel}
           setPanel={setPanel}
-          setVehiclePanel={setVehiclePanel} vehicleData={vehicleData} />
+          setVehiclePanel={setVehiclePanel} vehicleData={vehicleData}
+          selectedRideData={selectedRideData}
+          pickup={pickup}
+          destination={destination}
+          createRide={createRide} />
       </div>
       <div ref={driversearchPanelRef} className='translate-y-full fixed z-10 bg-green bottom-0 w-full round'>
         <DriverSearchPanel
@@ -204,6 +441,10 @@ const New = () => {
           setRideConfirmPanel={setrideConfirmPanel}
           setPanel={setPanel}
           setVehiclePanel={setVehiclePanel}
+          pickup={pickup}
+          destination={destination}
+          selectedRideData={selectedRideData}
+          createRide={createRide}
         />
       </div>
       <div className='translate-y-full fixed z-10 bg-green bottom-0 w-full round'>

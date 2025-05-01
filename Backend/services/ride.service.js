@@ -107,9 +107,51 @@ async function getFare(pickup, destination) {
     };
 }
 
+// module.exports= {getFare};
+
 
 // Main function to create a ride
-module.exports.createRide = async ({ user, pickup, destination, vehicleType }) => {
+// module.exports.createRide = async ({ user, pickup, destination, vehicleType }) => {
+//     if (!user || !pickup || !destination || !vehicleType) {
+//         throw new Error('All fields are required: user, pickup, destination, vehicleType');
+//     }
+
+//     try {
+//         const fareObject = await getFare(pickup, destination);
+
+//         // Normalize the vehicleType (to handle case sensitivity)
+//         const normalizedVehicleType = vehicleType.toLowerCase();
+
+//         // Check if the normalized vehicleType is valid
+//         if (!fareObject[normalizedVehicleType]) {
+//             throw new Error(`Invalid vehicle type: ${vehicleType}`);
+//         }
+
+//         const fare = fareObject[normalizedVehicleType];
+//         const otp = getOtp(6);
+
+//         const ride = await rideModel.create({
+//             user,
+//             pickup,
+//             destination,
+//             vehicleType: normalizedVehicleType,
+//             otp,
+//             fare
+//             // captain: to be assigned later, if needed
+//         });
+
+//         console.log('✅ Created Ride:', ride);
+
+//         return {
+//             message: 'Ride created successfully',
+//             ride
+//         };
+//     } catch (err) {
+//         console.error('❌ Error creating ride:', err.message);
+//         throw new Error('An error occurred while creating the ride');
+//     }
+// };
+async function createRide({ user, pickup, destination, vehicleType }) {
     if (!user || !pickup || !destination || !vehicleType) {
         throw new Error('All fields are required: user, pickup, destination, vehicleType');
     }
@@ -118,7 +160,7 @@ module.exports.createRide = async ({ user, pickup, destination, vehicleType }) =
         const fareObject = await getFare(pickup, destination);
 
         // Normalize the vehicleType (to handle case sensitivity)
-        const normalizedVehicleType = vehicleType.toLowerCase();
+        const normalizedVehicleType = vehicleType
 
         // Check if the normalized vehicleType is valid
         if (!fareObject[normalizedVehicleType]) {
@@ -148,4 +190,9 @@ module.exports.createRide = async ({ user, pickup, destination, vehicleType }) =
         console.error('❌ Error creating ride:', err.message);
         throw new Error('An error occurred while creating the ride');
     }
+}
+module.exports = {
+    getFare,
+    createRide,
+    getOtp
 };
