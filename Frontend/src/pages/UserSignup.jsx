@@ -35,7 +35,7 @@ const userSingup=()=>{
       console.log("Navigating to /", data);
       console.log(data);
       localStorage.setItem("token", JSON.stringify(data));
-      navigate("/home");
+      navigate("/");
     }
    // by the above thing we can be able to send the data to the other pages as well
    // console.log("hello");
