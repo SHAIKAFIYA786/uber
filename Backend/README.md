@@ -925,3 +925,42 @@ http://localhost:4000/maps/get-suggestions?input=Chennai
     }
 ]
 http://localhost:4000/maps/ /get-suggestions?origin=Chennai&destination=Delhi
+
+
+services:
+  # Backend service
+  - type: web
+    name: backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    repo: https://github.com/SHAIKAFIYA786/uber/tree/main/Backend  # Your backend GitHub repo URL
+    branch: main
+    envVars:
+      - key: PORT
+        value: "4000"  # Ensure that the backend listens on the correct port
+      - key: NODE_ENV
+        value: "production"
+      - key: PROD_DB_URI
+        value: "mongodb+srv://shaikafiya9676:ckI8vuBWZLxeDcww@cluster0.b7spkjs.mongodb.net/uber?retryWrites=true&w=majority&appName=Cluster0"  # MongoDB Atlas URI
+      - key: JWT_SECRET
+        value: "uberpractise"
+      - key: GOOGLE_MAPS_API
+        value: ""  # Leave empty if you don't have the key
+      - key: GEOAPIFY_API_KEY
+        value: "b272528f7a5144aa97a5fbf351cc726e"
+
+  # Frontend service
+  - type: web
+    name: frontend
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    repo: https://github.com/SHAIKAFIYA786/uber/tree/main/Frontend  # Your frontend GitHub repo URL
+    branch: main
+    envVars:
+      - key: VITE_BASE_URL
+        value: "https://uber.onrender.com"  # Backend URL on Render
+      - key: REACT_APP_API_URL
+        value: "https://uber.onrender.com"  # Frontend URL on Render
+
