@@ -91,6 +91,17 @@ const captainSchema = new mongoose.Schema({
         plate: { type: String, required: true },
         capacity: { type: Number, required: true },
         typevehicle: { type: String, required: true }
+    },
+    location:{
+        ltd:{
+            type:Number,
+        },
+        lng:{
+            type:Number,
+        }
+    },
+    socketId: {
+        type: String,
     }
 });
 

@@ -1,5 +1,11 @@
 const rideService=require('../services/ride.service');
 const { validationResult } = require("express-validator")
+const mapService=require("../services/maps.service")
+const { sendMessageToSocketId } = require('../socket');
+const rideModel=require('../models/ride.model');
+const captainModel=require('../models/captain.model')
+const userModel=require('../models/user.model')
+
 
 // module.exports.createRide=async(req,res)=>{
 //     console.log("hey iam a ride controller");
@@ -9,7 +15,7 @@ const { validationResult } = require("express-validator")
 //     }
 //     const {pickup,destination,vehicleType}=req.query;
 //     try{ 
-//         const ride=await rideService.createRide({user:req.user._id,pickup,destination,vehicleType})
+//         const ride=await ride.jsService.createRide({user:req.user._id,pickup,destination,vehicleType})
 //         console.log("hey i went");
 //         console.log(ride);
 //         return res.status(201).json(ride);
@@ -30,9 +36,28 @@ module.exports.createRide = async (req, res) => {
     
     try {
         const ride = await rideService.createRide({ user: req.user._id, pickup, destination, vehicleType });
+        console.log(req.user)
         console.log("hey i went");
-        console.log(ride);
-        return res.status(201).json(ride);
+        // console.log(ride);
+        // res.status(201).json(ride);
+        const PickUpCoordinates=await mapService.getAddressCoordinate(pickup)
+        console.log(PickUpCoordinates);
+        const captainsInRadius=await mapService.getCaptainsInTheRadius(PickUpCoordinates.lat,PickUpCoordinates.lng,100)
+        ride.otp="";
+        // console.log("Sending to captain's socket:", captain.socketId);
+        // const rideWithUser = await userModel.findOne({ _id:req.user._id });
+        const rideWithUser = await rideModel.findOne({ _id:ride.ride._id }).populate('user');
+        captainsInRadius.map(captain => {
+            console.log("hey we are the socket ids",captain.socketId);
+             sendMessageToSocketId(captain.socketId, {
+                event: 'new-ride',
+                data: rideWithUser
+            })
+
+        })
+        console.log("hey iam with ridewithUser",rideWithUser);
+        console.log("total",captainsInRadius);
+        res.status(201).json(ride);
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }

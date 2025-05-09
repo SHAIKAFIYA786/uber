@@ -1,5 +1,6 @@
 // maps.service.js
 const axios = require('axios');
+const captainModel = require('../models/captain.model');
 
 // module.exports.getAddressCoordinate = async (address) => {4
 //   const apiKey = process.env.GOOGLE_API_KEY; // Store your API key in .env for security
@@ -211,4 +212,22 @@ module.exports.getAutoCompleteSuggestions = async (input) => {
         throw err;  // Rethrow the error after logging
     }
 };
+
+
+module.exports.getCaptainsInTheRadius = async (ltd, lng, radius) => {
+
+  // radius in km
+console.log("hey iam in find captain")
+
+  const captains = await captainModel.find({
+      location: {
+          $geoWithin: {
+              $centerSphere: [ [ ltd, lng ], radius / 6371 ]
+          }
+      }
+  });
+  console.log("hey iam being retuend")
+
+  return captains;
+}
 
