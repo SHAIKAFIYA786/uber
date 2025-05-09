@@ -1,4 +1,3 @@
-
 import React, { createContext, useEffect } from 'react';
 import { io } from 'socket.io-client';
 
@@ -19,10 +18,17 @@ const SocketProvider = ({ children }) => {
 
     }, []);
 
+// const sendMessage=(eventName,message)=>{
+//     console.log(`sending  message, ${message} to $(eventName)`)
+//     socket.emit(eventName,message);
+// }
 
+// const receiveMessage=(eventName,callback)=>{
+//     socket.on(eventName,call Back)
+// };
 
     return (
-        <SocketContext.Provider value={{ socket }}>
+        <SocketContext.Provider value={{socket}}>
             {children}
         </SocketContext.Provider>
     );

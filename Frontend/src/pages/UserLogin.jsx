@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
+import { useContext } from "react";
+import {UserDataContext} from '../context/UserContext';
 
 const UserLogin = () => {
    const [email,setEmail]=useState("")
    const [password,setPassword]=useState("")
-   const [userData,setUserData]=useState({}); 
+  //  const [userData,setUserData]=useState({}); 
+  const { user, setUser } = useContext(UserDataContext);
    const navigate = useNavigate();//before using navigate use this
    const submitHandler=async (e)=>{
     //dont referesh the form 
@@ -16,14 +19,16 @@ const UserLogin = () => {
       email:email,
       password:password
     }
-    setUserData(data)
+    // setUserData(data)
+    setUser(data)
     const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`,data);
     if(response.status==200){
-      const data=response.data;
-      console.log("Navigating to /", data);
+      const data1=response.data;
+      console.log("Navigating to /", data1);
       // here we can set the user data to the context
-      setUserData(data);
-      localStorage.setItem("token", JSON.stringify(data));
+      // setUserData(data);
+      setUser(data1.user);
+      localStorage.setItem("token", JSON.stringify(data1));
       // and then we can navigate to the home page
       navigate("/home2");
     }

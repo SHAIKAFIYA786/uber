@@ -13,9 +13,10 @@ import WaitingForDriver from '../components/WaitingForDriver';
 import { useEffect } from 'react';
 import axios from 'axios';
 // import { UserContextData } from '../context/UserContext';
-import { UserContextData } from '../context/UserContext';
+// import { UserContextData } from '../context/UserContext';
 import { SocketContext } from '../context/SocketContext';
-
+import { UserDataContext } from '../context/UserContext';
+// import { SocketContext } from '../context/SocketContext'
 
 
 const New = () => {
@@ -38,63 +39,17 @@ const New = () => {
   const [isDestination, setisDestination] = useState(true);
   const [selectedRideData, setselectedRideData] = useState(null)
   const [Fare, setFare] = useState(null)
-  console.log(pickup, destination);
+  const { user, setUser } = useContext(UserDataContext);
+  const [Ride, setRide] = useState(null);
 
-  const { sendMessage, receiveMessage } = useContext(SocketContext);
-  const { user } = useContext(UserContextData);
+  const { socket} = useContext(SocketContext);
 
-  // useEffect(() => {
-  //   console.log("heybeta");
-  //   console.log(user);
-  //   socket.emit("join", { userType: "user", userId: user._id })
-  // }, [user])
-
-  // socket.on('ride-confirmed', ride => {
-
-  //   setVehicleFound(false)
-  //   setWaitingForDriver(true)
-  //   setRide(ride)
+  // useEffect(()=>{
+  //   sendMessage("hello",)
   // })
-
-  // socket.on('ride-started', ride => {
-  //   console.log("ride")
-  //   setWaitingForDriver(false)
-  //   navigate('/riding', { state: { ride } }) // Updated navigate to include ride data
-  // })
-
-
-  // const handlePickupChange = async (e) => {
-  //   setPickup(e.target.value)
-  //   try {
-  //     const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, {
-  //       params: { input: e.target.value },
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem('token')}`
-  //       }
-
-  //     })
-  //     setPickupSuggestions(response.data)
-  //   } catch {
-  //     // handle error
-  //   }
-  // }
-
-  // const handleDestinationChange = async (e) => {
-  //   setDestination(e.target.value)
-  //   try {
-  //     const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, {
-  //       params: { input: e.target.value },
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem('token')}`
-  //       }
-  //     })
-  //     setDestinationSuggestions(response.data)
-  //   } catch {
-  //     // handle error
-  //   }
-  // }
-
-
+  useEffect(() => {
+     socket.emit("join",{userType:"user",userId:user._id});
+  }, [user])
   useEffect(() => {
     if (pickup) {
       const storedToken = localStorage.getItem('token'); // Retrieve the token from localStorage
@@ -121,7 +76,7 @@ const New = () => {
           })
           .catch((error) => {
             if (error.response) {
-              // Server responded with a status code outside the 2xx range
+              // Server responded with a  status code outside the 2xx range
               console.error("Error fetching suggestions:", error.response.data);
             } else if (error.request) {
               // Request was made but no response received
@@ -136,6 +91,15 @@ const New = () => {
       }
     }
   }, [pickup]);
+
+
+  socket.on('new-ride', (data) => {
+
+    setRide(data)
+    setRidePopupPanel(true)
+
+})
+
   useEffect(() => {
     if (destination) {
       const storedToken = localStorage.getItem('token'); // Retrieve the token from localStorage
@@ -284,7 +248,7 @@ const New = () => {
     if (!storedToken) {
       console.error("No auth token found. Please log in.");
       return;
-    } 
+    }
     try {
       const parsedToken = JSON.parse(storedToken); // Parse the token if it's stored as a JSON string
       const authToken = parsedToken.token; // Extract the actual token
@@ -311,7 +275,7 @@ const New = () => {
     }
 
   }
-  
+
   async function createRide() {
     const storedToken = localStorage.getItem('token'); // Retrieve the token from localStorage
 

@@ -41,11 +41,12 @@
 
 // export default CaptainDetails
 import React, { useContext } from 'react';
-import { CaptainContext } from '../context/CaptainContext';
+import {CaptainContext} from '../context/CaptainContext';
 
-const CaptainDetails = () => {
-  const { captain } = useContext(CaptainContext); // Access captain data from context
-
+const CaptainDetails = (props) => {
+  const {captain} = useContext(CaptainContext); // Access captain data from context
+  // console.log(captain,"hey iam in componnet")
+  console.log("hi",captain)
   return (
     <div>
       <h3 className='text-center font-bold text-2xl'>🫡 Welcome Captain 🫡</h3>
@@ -56,7 +57,7 @@ const CaptainDetails = () => {
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe1SPfhh7ROKuvrK_pAshT1WhejRvxeRTfpg&s"
             alt="Captain"
           />
-          {/* <h2>{`${captain.fullname.firstname} ${captain.fullname.lastname}`}</h2> */}
+          <h2 className='font-bold'>{captain.fullname.firstname}  {captain.fullname.lastname}</h2>
         </div>
         <div className='justify-start'>
           <h2 className='font-bold text-xl'>$295</h2>

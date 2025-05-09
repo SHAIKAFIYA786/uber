@@ -18,7 +18,7 @@ const RidePopUp = (props) => {
              <div className='flex justify-between text-center my-10 bg-yellow-400 p-4 rounded-lg'>
                 <div className='flex text-center gap-3'>
                     <img  className='h-10 w-10 rounded-full object-cover' src="https://media.istockphoto.com/id/508956644/photo/pretty-colombian-woman.jpg?s=612x612&w=0&k=20&c=jEwTCMKSpjYsaSfiFIlifYneUpczureQFl8o543_ZjE=" />
-                    <h2 className='font-semibold text-xl'>Harsh Pateliya</h2>
+                    <h2 className='font-semibold text-xl'>{props.passenger?.user.fullname.firstname + " " + props.passenger?.user.fullname.lastname}</h2>
                 </div>
                 <h2 className='font-bold text-xl'>2.2km</h2>
              </div>
@@ -29,7 +29,7 @@ const RidePopUp = (props) => {
                     </h2>
                     <div>
                         <p className='font-bold text-2xl ml-4'>562/11-A</p>
-                        <p className='ml-4 text-lg'>Kalikiri,Chittor,Andhra Pradesh</p>
+                        <p className='ml-4 text-lg'>{props.passenger?.pickup}</p>
                     </div>
                 </div>
                 <div className='flex items-center mb-4 border-b-4 border-[#eeeeee] pt-8 pb-8'>
@@ -38,7 +38,7 @@ const RidePopUp = (props) => {
                     </h2>
                     <div>
                         <p className='font-bold text-2xl ml-4'>Third Wave Coffe</p>
-                        <p className='ml-4 text-lg'>murkambattu,chittorAndhra Pradesh</p>
+                        <p className='ml-4 text-lg'>{props.passenger?.destination}</p>
                     </div>
                 </div>
                 <div className='flex items-centerbmb-2 border-b-4 border-[#eeeeee] pt-8 pb-8'>
@@ -46,7 +46,7 @@ const RidePopUp = (props) => {
                         <i className="ri-map-pin-fill text-2xl"></i>
                     </h2>
                     <div>
-                        <p className='font-bold text-2xl ml-4'>$132.32</p>
+                        <p className='font-bold text-2xl ml-4'>₹{props.passenger?.fare} </p>
                         <p className='ml-4 text-lg'>Cash Cash</p>
                     </div>
                 </div>

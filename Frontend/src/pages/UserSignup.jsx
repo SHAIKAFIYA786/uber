@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import { useState } from "react";
 import { useContext } from "react";
-import {UserContextData} from "../context/userContext";
+import {UserDataContext} from "../context/UserContext";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +13,9 @@ const userSingup=()=>{
   // const [userData,setUserData]=useState({});
   const [firstname,setFirstname]=useState("");
   const [lastname,setLastname]=useState("");  
-  const {userData,setUserData} = useContext(UserContextData);
+  const {user, setUser} = useContext(UserDataContext);
+  const contextValue = useContext(UserDataContext);
+  console.log("context value:", contextValue);
   const submitHandler=async (e)=>{
    //dont referesh the form     
    e.preventDefault();
@@ -26,14 +28,14 @@ const userSingup=()=>{
        password:password
       }
     console.log(data);
+    setUser(data)
     const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`,data);
     if(response.status==201){
       const data=response.data;
       console.log("Navigating to /", data);
       console.log(data);
-      setUserData(data);
       localStorage.setItem("token", JSON.stringify(data));
-      navigate("/home2");
+      navigate("/home");
     }
    // by the above thing we can be able to send the data to the other pages as well
    // console.log("hello");

@@ -4,7 +4,7 @@ import React, { createContext, useState } from "react";
 export const CaptainContext = createContext();
 
 const CaptainProvider = ({ children }) => {
-  const [captain, setCaptainData] = useState({
+  const [captain,setCaptainData] = useState({
     fullname: {
       firstname: "",
       lastname: "",
@@ -20,7 +20,7 @@ const CaptainProvider = ({ children }) => {
   });
 
   return (
-    <CaptainContext.Provider value={{captain, setCaptainData}}>
+    <CaptainContext.Provider value={{captain,setCaptainData}}>
       {children}
     </CaptainContext.Provider>
   );
