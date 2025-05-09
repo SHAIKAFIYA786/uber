@@ -6,11 +6,11 @@ import UserSignup from './pages/UserSignup'
 import CaptainLogin from './pages/CaptainLogin'
 import CaptainSignup from './pages/CaptainSignUp'
 import CaptainHome from './pages/CaptainHome'
-import Riding from './pages/riding'
+import Riding from './pages/Riding'
 import Home2 from './pages/Home2'
 import { useContext } from 'react';
 import {  UserDataContext } from './context/UserContext';
-import UserProtectWrapper from './pages/userProtectWrapper';
+import UserProtectWrapper from './pages/UserProtectWrapper';
 import  CaptainProtectWrapper from './pages/CaptainProtectWrapper'
 import UserLogout from './pages/UserLogout';
 // import CaptainRiding from './pages/CaptainRiding';
